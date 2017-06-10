@@ -15,7 +15,7 @@ $(document).ready(function(){
 //Declare all variables at top
 var done = false;
 var btc = 5;
-var sec = 12;
+var sec = 0;
 var min = 25;
 
 
@@ -25,7 +25,7 @@ var mb = document.getElementById('minusBreak');
 mb.addEventListener("click", myFunctionmb);
 
 function myFunctionmb() {
-  if(btc === 5){
+  if(btc === 5 || btc < 5){
     
     mb.style.visibility = "hidden";
 
@@ -61,11 +61,11 @@ mc.addEventListener("click", myFunctionmc);
 
 function myFunctionmc() {
   
-  if(min < 5){
+  if(min === 5){
     
     mc.style.visibility = "hidden";
 var ct = document.getElementById('count');
-  ct.innerHTML = 0;
+  ct.innerHTML = 5;
     
   } else {
     min -= 5;
@@ -80,7 +80,7 @@ mp.addEventListener("click", myFunctionmp);
 function myFunctionmp() {
  if(min === 5){
    mc.style.visibility = "visible";
-    min = 10;
+    min += 5;
     var ct = document.getElementById('count');
   ct.innerHTML = min;
  } else{
@@ -163,7 +163,13 @@ function studyTimerTwo() {
        clearInterval(breakStartInterval);
     
      }                      
- else if(btc === 0 && sec === 12) {
+ else if(btc === 0 && sec === 0) {
+   min = 5;
+  btc = 5;
+   var ct = document.getElementById('count');
+  ct.innerHTML = min;
+   var bt = document.getElementById('bt');
+  bt.innerHTML = btc;
      clearInterval(breakStartInterval);
  }
    }, 5);                     
@@ -205,8 +211,11 @@ wrongSound.play();
 var timeT = document.getElementById('p5');
   timeT.innerHTML = 0+':'+00;
   min = 5;
+  btc = 5;
   var ct = document.getElementById('count');
   ct.innerHTML = min;
+   var bt = document.getElementById('bt');
+  bt.innerHTML = btc;
  // when done is true the studyTimer and/or breaktimer functin will stop
  done = true;
  // console.log(j);
