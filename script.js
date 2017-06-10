@@ -1,6 +1,7 @@
 window.onload=function(){
 
 $(document).ready(function(){
+  //jquery instead of vanilla DOM manipulation for quick adding and removing of classes
     $(".st").click(function(){
         $("#c").removeClass("clock");
       $("#c").addClass("clockE");
@@ -19,7 +20,7 @@ var min = 25;
 
 
 //Using vanilla DOM manipulation to grab button IDs and add event listener.
-//Buttons are for adding and removing time from break and timer
+//Buttons are for adding and removing time from break
 var mb = document.getElementById('minusBreak');
 mb.addEventListener("click", myFunctionmb);
 
@@ -35,11 +36,7 @@ function myFunctionmb() {
   bt.innerHTML = btc;
 }
 }
-/*
 
-
-
-*/
 var pb = document.getElementById('plusBreak');
 pb.addEventListener("click", myFunctionpb);
 
@@ -57,7 +54,7 @@ function myFunctionpb() {
   }
 }
 
-
+//Buttons are for adding and removing time from timer
 
 var mc = document.getElementById('minusCount');
 mc.addEventListener("click", myFunctionmc);
@@ -103,19 +100,25 @@ en.addEventListener("click", endTimer);
 
 
 
-
+// studyTimer function that ets started by the setInterval
 function studyTimer(){
-  
-   
   if(sec === 0){
     min = min - 1;
   sec = 60;
   document.getElementById("p5").innerHTML = min + ":" + sec;
       
   }else{ 
-   studyTimerTwo();
-  }
+    if(sec <= 10){
+   sec = sec - 1;
+  document.getElementById("p5").innerHTML = min + ":" + "0"+sec;
+ } else{
+    sec = sec - 1;
+  document.getElementById("p5").innerHTML = min + ":" + sec;
+   
+ }
+ }
 };
+/*
 function studyTimerTwo() {
  if(sec <= 10){
    sec = sec - 1;
@@ -126,15 +129,15 @@ function studyTimerTwo() {
    
  }
 };
+*/
 
-
-// when start button is clicked this function studyStart() runs my setInterval function studyStartInterval() that runs the study-timer from above studyTimer().
-//When the timmer reaches zero it runs the intervial function that runs the break timer. The study-time and break time have their own starter function and setInterval
+//Start button triggers  studyStart() which runs  a setInterval for the studyTimer().
+//When the timmer reaches zero it triggers the clearInterval and starts the  setInterval for the breakTimer() function
 //
  function studyStart(){
    done = false;
  var studyStartInterval = setInterval(function(){ studyTimer();
-                                //console.log(j);
+                                
      if(done === true){
     
     var timeT = document.getElementById('p5');
@@ -144,7 +147,7 @@ function studyTimerTwo() {
        
      }
    else if(min === 0 && sec === 0) {
-     document.getElementById('myAudio').play();
+     
     
      clearInterval(studyStartInterval);
    breakStart();
@@ -165,7 +168,7 @@ function studyTimerTwo() {
  }
    }, 5);                     
 };
-//break timer
+//break timer function
 function breakTimer(){
    var timeT = document.getElementById('p5');
   timeT.innerHTML = btc + ":" + sec;
@@ -174,9 +177,16 @@ function breakTimer(){
   sec = 60;
   document.getElementById("p5").innerHTML = min + ":" + sec;
       }else{ 
-   breakTimerTwo();
+   if(sec <= 10){
+   sec = sec - 1;
+  document.getElementById("p5").innerHTML = btc + ":" + "0"+sec;
+ } else{
+    sec = sec - 1;
+  document.getElementById("p5").innerHTML = btc + ":" + sec;
+ }
   }
 };
+/*
 function breakTimerTwo() {
  if(sec <= 10){
    sec = sec - 1;
@@ -186,7 +196,7 @@ function breakTimerTwo() {
   document.getElementById("p5").innerHTML = btc + ":" + sec;
  }
 };
-
+*/
 
 // had trouble clearing the intervials so I created this function that gives j the value of 1. If j is 1 the intervials end.
 function endTimer(){
@@ -197,7 +207,7 @@ var timeT = document.getElementById('p5');
   min = 5;
   var ct = document.getElementById('count');
   ct.innerHTML = min;
- 
+ // when done is true the studyTimer and/or breaktimer functin will stop
  done = true;
  // console.log(j);
 };
@@ -205,4 +215,5 @@ var timeT = document.getElementById('p5');
 
 
 }
+
 
